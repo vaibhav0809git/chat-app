@@ -8,7 +8,16 @@ const jwt = require("jsonwebtoken")
 
 
 const app = express()
-app.use(cors())
+
+// Configure CORS for production
+const corsOptions = {
+  origin: ["https://surva.vercel.app", "https://chat-app-qvx0.onrender.com", "http://localhost:3000", "file://"],
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"]
+}
+
+app.use(cors(corsOptions))
 app.use(express.json())
 
 // Cloudinary and Multer setup
