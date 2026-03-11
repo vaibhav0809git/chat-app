@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - SurVa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>SurVa</h1>
+
+      <div class="form-group">
+        <input
+          id="username"
+          placeholder="Username or Email"
+          autocomplete="off"
+        />
+        <input
+          id="password"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+        />
+        <button onclick="login()">Login</button>
+      </div>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+      <p><a href="index.html">Back to Home</a></p>
+    </div>
+
+    <script>
+      async function login() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (!username || !password) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        const res = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+
+        if (data.token) {
+          localStorage.setItem("username", data.username);
+          localStorage.setItem("token", data.token);
+          window.location = "users.html";
+        } else {
+          alert(data.message);
+        }
+      }
+    </script>
+  </body>
+</html>

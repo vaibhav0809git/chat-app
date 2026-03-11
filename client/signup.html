@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - SurVa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>SurVa</h1>
+      <p>Sign up to start chatting</p>
+
+      <div class="form-group" id="signupForm">
+        <input id="username" placeholder="Username" autocomplete="off" />
+        <input
+          id="password"
+          type="password"
+          placeholder="Password"
+          autocomplete="off"
+        />
+        <button onclick="signup()">Sign Up</button>
+      </div>
+
+      <div id="successMessage" style="display: none; text-align: center">
+        <h2 style="color: #25d366; margin-bottom: 10px">✓ Account Created!</h2>
+        <p style="color: #65676b; margin-bottom: 15px">
+          Your unique username is:
+        </p>
+        <div
+          style="
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            word-break: break-all;
+          "
+        >
+          <strong
+            style="font-size: 16px; color: #111"
+            id="displayUsername"
+          ></strong>
+        </div>
+        <p style="color: #65676b; font-size: 13px; margin-bottom: 15px">
+          Share this username with friends to add them!
+        </p>
+        <button
+          onclick="window.location = 'login.html'"
+          class="btn btn-primary"
+        >
+          Go to Login
+        </button>
+      </div>
+
+      <p id="loginLink">
+        Already have an account? <a href="login.html">Login</a>
+      </p>
+      <p><a href="index.html">Back to Home</a></p>
+    </div>
+
+    <script>
+      async function signup() {
+        const username = document.getElementById("username").value;
+        const password = document.getElementById("password").value;
+
+        if (!username || !password) {
+          alert("Please fill all fields");
+          return;
+        }
+
+        if (password.length < 6) {
+          alert("Password must be at least 6 characters");
+          return;
+        }
+
+        const res = await fetch("http://localhost:3000/signup", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+
+        if (data.username) {
+          document.getElementById("signupForm").style.display = "none";
+          document.getElementById("loginLink").style.display = "none";
+          document.getElementById("displayUsername").innerText = data.username;
+          document.getElementById("successMessage").style.display = "block";
+        } else {
+          alert(data.message || "Account created! Please login.");
+        }
+      }
+    </script>
+  </body>
+</html>

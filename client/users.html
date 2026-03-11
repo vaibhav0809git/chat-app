@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Messages - SurVa</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #e5e5e5;
+      }
+
+      .tab-btn {
+        padding: 12px 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        color: #65676b;
+        border-bottom: 3px solid transparent;
+        transition: all 0.2s;
+      }
+
+      .tab-btn.active {
+        color: #667eea;
+        border-bottom-color: #667eea;
+      }
+
+      .search-box {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 20px;
+      }
+
+      .search-box input {
+        flex: 1;
+        padding: 12px 16px;
+        border: 1px solid #e5e5e5;
+        border-radius: 24px;
+        font-size: 14px;
+        background: #f5f5f5;
+      }
+
+      .search-box button {
+        padding: 10px 24px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 24px;
+        cursor: pointer;
+        font-weight: 600;
+        width: auto;
+        margin: 0;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+      }
+
+      .request-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 14px;
+        background: white;
+        border: 1px solid #e5e5e5;
+        border-radius: 12px;
+        margin-bottom: 10px;
+      }
+
+      .request-info {
+        flex: 1;
+      }
+
+      .request-info .username {
+        font-weight: 600;
+        color: #111;
+        margin-bottom: 4px;
+      }
+
+      .request-info .status {
+        font-size: 12px;
+        color: #65676b;
+      }
+
+      .request-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .request-actions button {
+        padding: 8px 16px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        width: auto;
+        margin: 0;
+      }
+
+      .accept-btn {
+        background: #25d366;
+        color: white;
+      }
+
+      .accept-btn:hover {
+        background: #20ba59;
+      }
+
+      .reject-btn {
+        background: #e5e5e5;
+        color: #111;
+      }
+
+      .reject-btn:hover {
+        background: #ccc;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #65676b;
+      }
+
+      .empty-state-icon {
+        font-size: 48px;
+        margin-bottom: 10px;
+      }
+
+      .username-card {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 20px;
+        color: white;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .username-card .info {
+        flex: 1;
+      }
+
+      .username-card .label {
+        font-size: 12px;
+        opacity: 0.9;
+        margin-bottom: 4px;
+      }
+
+      .username-card .username {
+        font-size: 16px;
+        font-weight: 600;
+        word-break: break-all;
+      }
+
+      .copy-btn {
+        padding: 8px 16px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: 600;
+        transition: all 0.2s;
+        width: auto;
+        margin: 0;
+      }
+
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>SurVa</h1>
+      <h2>Messages</h2>
+
+      <div class="username-card">
+        <div class="info">
+          <div class="label">Your Unique Username</div>
+          <div class="username" id="userDisplay">Loading...</div>
+        </div>
+        <button class="copy-btn" onclick="copyUsername()">Copy</button>
+      </div>
+
+      <div class="button-group" style="margin-bottom: 20px">
+        <button onclick="logout()">Logout</button>
+      </div>
+
+      <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('chats')">
+          Chats
+        </button>
+        <button class="tab-btn" onclick="switchTab('requests')">
+          Requests
+        </button>
+        <button class="tab-btn" onclick="switchTab('search')">
+          Find Friends
+        </button>
+      </div>
+
+      <!-- Chats Tab -->
+      <div id="chats" class="tab-content active">
+        <div id="chatsList"></div>
+      </div>
+
+      <!-- Requests Tab -->
+      <div id="requests" class="tab-content">
+        <div id="requestsList"></div>
+      </div>
+
+      <!-- Search Tab -->
+      <div id="search" class="tab-content">
+        <div class="search-box">
+          <input
+            id="searchInput"
+            placeholder="Search username..."
+            autocomplete="off"
+          />
+          <button onclick="searchUsers()">Search</button>
+        </div>
+        <button
+          onclick="showAllUsers()"
+          style="
+            width: 100%;
+            margin-bottom: 15px;
+            background: #f5f5f5;
+            color: #111;
+            border: 1px solid #e5e5e5;
+            padding: 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 12px;
+          "
+        >
+          Show All Users
+        </button>
+        <div id="searchResults"></div>
+      </div>
+    </div>
+
+    <script src="users.js"></script>
+  </body>
+</html>
