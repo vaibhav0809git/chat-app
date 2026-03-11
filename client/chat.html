@@ -1,56 +1,57 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Chat - SurVa</title>
-<link rel="stylesheet" href="style.css" />
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat - SurVa</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<body>
+  <body>
+    <div class="chat-container">
+      <div class="chat-header">
+        <h2 id="chatWith"></h2>
+      </div>
 
-<div class="chat-container">
+      <div class="chat-messages" id="messages"></div>
 
-  <div class="chat-header">
-    <h2 id="chatWith"></h2>
-  </div>
+      <div class="chat-input">
+        <!-- Hidden file input -->
+        <input
+          type="file"
+          id="imageInput"
+          hidden
+          accept="image/jpg,image/png,image/jpeg"
+        />
 
-  <div class="chat-messages" id="messages"></div>
+        <!-- Attachment Icon -->
+        <button
+          class="attach-btn"
+          onclick="document.getElementById('imageInput').click()"
+        >
+          📎
+        </button>
 
-  <div class="chat-input">
+        <!-- Message input -->
+        <input id="msg" placeholder="Type a message..." autocomplete="off" />
 
-    <!-- Hidden file input -->
-    <input type="file" id="imageInput" hidden accept="image/jpg,image/png,image/jpeg" />
+        <!-- Send button -->
+        <button onclick="send()">Send</button>
+      </div>
+    </div>
 
-    <!-- Attachment Icon -->
-    <button class="attach-btn"
-      onclick="document.getElementById('imageInput').click()">
-      📎
-    </button>
+    <!-- Image Lightbox -->
+    <div id="imageLightbox" class="lightbox" onclick="closeLightbox()">
+      <span class="lightbox-close">&times;</span>
+      <img id="lightboxImage" class="lightbox-image" src="" alt="" />
+      <div class="lightbox-controls">
+        <button class="zoom-btn" onclick="zoomIn(event)">+</button>
+        <button class="zoom-btn" onclick="zoomOut(event)">−</button>
+        <button class="zoom-btn" onclick="resetZoom(event)">Reset</button>
+      </div>
+    </div>
 
-    <!-- Message input -->
-    <input id="msg" placeholder="Type a message..." autocomplete="off" />
-
-    <!-- Send button -->
-    <button onclick="send()">Send</button>
-
-  </div>
-
-</div>
-
-<!-- Image Lightbox -->
-<div id="imageLightbox" class="lightbox" onclick="closeLightbox()">
-  <span class="lightbox-close">&times;</span>
-  <img id="lightboxImage" class="lightbox-image" src="" alt="">
-  <div class="lightbox-controls">
-    <button class="zoom-btn" onclick="zoomIn(event)">+</button>
-    <button class="zoom-btn" onclick="zoomOut(event)">−</button>
-    <button class="zoom-btn" onclick="resetZoom(event)">Reset</button>
-  </div>
-</div>
-
-<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
-<script src="chat.js"></script>
-
-</body>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <script src="chat.js"></script>
+  </body>
 </html>
