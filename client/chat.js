@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000")
+const socket = io("https://chat-app-qvx0.onrender.com")
 
 const sender = localStorage.getItem("username")
 const urlParams = new URLSearchParams(window.location.search)
@@ -13,7 +13,7 @@ document.getElementById("chatWith").innerText = "Chat with " + receiver
 /* Check if users are friends */
 
 async function checkIfFriends(){
-  const res = await fetch("http://localhost:3000/friends/" + sender)
+  const res = await fetch("https://chat-app-qvx0.onrender.com/friends/" + sender)
   const friends = await res.json()
 
   if(!friends.includes(receiver)){
@@ -27,7 +27,7 @@ async function checkIfFriends(){
 async function loadMessages(){
   await checkIfFriends()
 
-  const res = await fetch("http://localhost:3000/messages/" + sender + "/" + receiver)
+  const res = await fetch("https://chat-app-qvx0.onrender.com/messages/" + sender + "/" + receiver)
   const messages = await res.json()
 
   messages.forEach(showMessage)
@@ -127,7 +127,7 @@ imageInput.addEventListener("change", async ()=>{
 
   try {
     console.log("Uploading image to server...")
-    const res = await fetch("http://localhost:3000/upload",{
+    const res = await fetch("https://chat-app-qvx0.onrender.com/upload",{
       method: "POST",
       body: formData
     })

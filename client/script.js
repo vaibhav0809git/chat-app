@@ -1,4 +1,4 @@
-const socket = io("http://localhost:3000")
+const socket = io("https://chat-app-qvx0.onrender.com")
 
 const username = localStorage.getItem("username")
 

@@ -27,7 +27,7 @@ function switchTab(tabName){
 }
 
 async function loadChats(){
-  const res = await fetch("http://localhost:3000/friends/" + currentUser)
+  const res = await fetch("https://chat-app-qvx0.onrender.com/friends/" + currentUser)
   const friends = await res.json()
 
   const chatsList = document.getElementById("chatsList")
@@ -50,7 +50,7 @@ async function loadChats(){
 }
 
 async function loadRequests(){
-  const res = await fetch("http://localhost:3000/chat-requests/" + currentUser)
+  const res = await fetch("https://chat-app-qvx0.onrender.com/chat-requests/" + currentUser)
   const requests = await res.json()
 
   const requestsList = document.getElementById("requestsList")
@@ -88,7 +88,7 @@ async function searchUsers(){
 
   try {
     console.log("Searching for:", searchTerm, "Current user:", currentUser)
-    const searchURL = `http://localhost:3000/search-user/${encodeURIComponent(searchTerm)}?currentUser=${encodeURIComponent(currentUser)}`
+    const searchURL = `https://chat-app-qvx0.onrender.com/search-user/${encodeURIComponent(searchTerm)}?currentUser=${encodeURIComponent(currentUser)}`
     console.log("Request URL:", searchURL)
     
     const res = await fetch(searchURL)
@@ -136,7 +136,7 @@ async function searchUsers(){
 async function showAllUsers(){
   try {
     console.log("Fetching all users...")
-    const res = await fetch("http://localhost:3000/all-users")
+    const res = await fetch("https://chat-app-qvx0.onrender.com/all-users")
     
     if(!res.ok) {
       throw new Error(`Server error: ${res.status}`)
@@ -173,7 +173,7 @@ async function showAllUsers(){
 }
 
 async function sendRequest(toUser){
-  const res = await fetch("http://localhost:3000/send-request", {
+  const res = await fetch("https://chat-app-qvx0.onrender.com/send-request", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({from: currentUser, to: toUser})
@@ -188,7 +188,7 @@ async function sendRequest(toUser){
 }
 
 async function acceptRequest(from, to){
-  const res = await fetch("http://localhost:3000/accept-request", {
+  const res = await fetch("https://chat-app-qvx0.onrender.com/accept-request", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({from, to})
@@ -201,7 +201,7 @@ async function acceptRequest(from, to){
 }
 
 async function rejectRequest(from, to){
-  const res = await fetch("http://localhost:3000/reject-request", {
+  const res = await fetch("https://chat-app-qvx0.onrender.com/reject-request", {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify({from, to})
