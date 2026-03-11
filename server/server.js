@@ -121,10 +121,20 @@ app.get("/", (req, res) => {
 
 /* MongoDB Connection */
 
-mongoose.connect("mongodb+srv://SurVa:SurVa%40123@cluster0.kbps6dl.mongodb.net/chat")
+mongoose.connect("mongodb+srv://SurVa:SurVa%40123@cluster0.kbps6dl.mongodb.net/chat", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  ssl: true,
+  retryWrites: true,
+  w: "majority"
+})
 
 mongoose.connection.on("connected",()=>{
-  console.log("MongoDB connected")
+  console.log("MongoDB connected successfully")
+})
+
+mongoose.connection.on("error", (err) => {
+  console.error("MongoDB connection error:", err)
 })
 
 /* Models */
