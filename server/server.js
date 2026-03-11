@@ -10,21 +10,33 @@ const jwt = require("jsonwebtoken")
 const app = express()
 
 // Configure CORS for production
-const corsOptions = {
+// const corsOptions = {
+//   origin: [
+//     "https://chat-app-chi-flame.vercel.app",
+//     "https://surva.vercel.app",
+//     "http://localhost:3000"
+//   ],
+//   credentials: true,
+//   methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+//   allowedHeaders: ["Content-Type","Authorization"]
+// }
+
+// app.use(cors(corsOptions))
+// app.use(express.json())
+
+const cors = require("cors")
+
+app.use(cors({
   origin: [
-    "https://chat-app-chi-flame.vercel.app",
     "https://surva.vercel.app",
+    "https://chat-app-chi-flame.vercel.app",
     "http://localhost:3000"
   ],
-  credentials: true,
-  methods: ["GET","POST","PUT","DELETE","OPTIONS"],
+  methods: ["GET","POST","PUT","DELETE"],
   allowedHeaders: ["Content-Type","Authorization"]
-}
+}))
 
-app.use(cors(corsOptions))
-app.use(express.json())
-
-
+app.options("*", cors())
 
 
 
